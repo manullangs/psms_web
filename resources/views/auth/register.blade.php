@@ -3,7 +3,7 @@
 
 @section('content')
     <div class="mx-lg-5 mt-lg-4 mb-lg-3">
-        <div class="rounded bg-info pt-3 pb-3">
+        <div class="rounded pt-3 pb-3" style="background-color: rgb(107, 233, 107)">
             <h1 class="text-center fw-bold">Register</h1>
             <div class="mt-3 bg-dark mx-auto rounded" style="height: 3px;width: 75px"></div>
 
@@ -68,7 +68,7 @@
                                         </select>
                                     </div>
 
-                                    <button type="submit" class="btn btn-lg btn-primary w-100">Register</button>
+                                    <button type="submit" class="btn w-100" style="background-color: green">Register</button>
                                 </form>
                             </div>
                         </div>

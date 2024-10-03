@@ -18,8 +18,8 @@
                             </div>
                         @endif
 
-                        <div class="card bg-white w-100">
-                            <div class="card-body">
+                        <div class="card bg-white w-100" >
+                            <div class="card-body rounded" alt="100px" style="background-color: rgb(107, 233, 107)">
                                 <form action="{{ route('login.authenticate') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">
@@ -44,9 +44,7 @@
                                     </div>
 
                                     <div class="d-grid gap-2 col-6 mx-auto">
-                                        <button type="submit" class="btn btn-lg btn-success w-auto">Submit</button>
-                                        <p class="text-center">atau</p>
-                                        <a href="//" class="w-100 btn btn-lg btn-info mt-2">Login with Google</a>
+                                        <button type="submit" class="btn btn-lg w-auto" style="background-color:green">Submit</button>
                                     </div>
                                 </form>
                             </div>

@@ -13,14 +13,12 @@
     <header>
        <nav>
          <div class="container-fluid">
-            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #99ba99;">
-                
-                <a href="" style="color: #196419;">#RIBAKSUDE</a>
-
+            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #99ba99; height:30px">
+                <a class="col-md-4 offset-md-5 fw-bold fst-italic" style="color: #196419; font-size:20px">#RIBAKSUDE</a>
             </nav>
-            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #327532;">
+            <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #327532; height:50px">
                 <div class="container-fluid">
-                    <img class="navbar-brand fw-bold" src="https://upload.wikimedia.org/wikipedia/id/0/0c/LogoPSMS.png" style="width: 100px"></img>
+                    <img class="navbar-brand fw-bold" src="https://upload.wikimedia.org/wikipedia/id/0/0c/LogoPSMS.png" style="width: 80px"></img>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
