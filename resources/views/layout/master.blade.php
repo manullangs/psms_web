@@ -27,20 +27,20 @@
                             @auth
                             @if (Auth::check() && isset(Auth::user()->roles[0]) && Auth::user()->roles[0]->name == 'superadmin')
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="{{ route('dashboard.products') }}">Manage Product</a>
+                                <a class="nav-link fw-bold " href="{{ route('dashboard.products') }}" >Manage Product</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="{{ route('dashboard.users') }}">Manage User</a>
+                                <a class="nav-link fw-bold text-primary" href="{{ route('dashboard.users') }}">Manage User</a>
                             </li>
                         @elseif (Auth::check())
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="{{ route('dashboard.products') }}">Manage Product</a>
+                                <a class="nav-link fw-bold text-white" href="{{ route('dashboard.products') }}">Manage Product</a>
                             </li>
                         @endif
                         
     
                                 <li class="nav-item">
-                                    <a class="nav-link fw-bold" href="{{ route('logout') }}">Logout</a>
+                                    <a class="nav-link fw-bold text-white" href="{{ route('logout') }}">Logout</a>
                                 </li>
                             @else
                                 <li class="nav-item">
