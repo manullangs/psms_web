@@ -130,8 +130,6 @@ class DashboardController extends Controller
         return redirect()->route('dashboard.products')->with('success', 'Product deleted successfully');
     }
 
-
-
     // Users
     public function users()
     {
