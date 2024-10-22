@@ -44,7 +44,6 @@ class AuthController extends Controller
         ]);
 
         $user->assignRole($request->role);
-
         if ($user) {
             Auth::login($user);
             return redirect()->route('login')->with('success', 'Register success');

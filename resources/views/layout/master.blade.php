@@ -27,15 +27,18 @@
                             @auth
                             @if (Auth::check() && isset(Auth::user()->roles[0]) && Auth::user()->roles[0]->name == 'superadmin')
                             <li class="nav-item">
-                                <a class="nav-link fw-bold " href="{{ route('dashboard.products') }}" >Manage Product</a>
+                                <a class="nav-link fw-bold text-white" href="{{ route('products.index') }}">product</a>
+                            </li>  
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('dashboard.products') }}" >Manage Product</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold text-primary" href="{{ route('dashboard.users') }}">Manage User</a>
+                                <a class="nav-link fw-bold text-white" href="{{ route('dashboard.users') }}">Manage User</a>
                             </li>
                         @elseif (Auth::check())
-                            <li class="nav-item">
-                                <a class="nav-link fw-bold text-white" href="{{ route('dashboard.products') }}">Manage Product</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('products.index') }}">product</a>
+                        </li>  
                         @endif
                         
     
@@ -43,12 +46,16 @@
                                     <a class="nav-link fw-bold text-white" href="{{ route('logout') }}">Logout</a>
                                 </li>
                             @else
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('products.index') }}">product</a>
+                            </li>
                                 <li class="nav-item">
-                                    <a class="nav-link fw-bold" href="{{ route('login') }}">Login</a>
+                                    <a class="nav-link fw-bold text-white" href="{{ route('login') }}">Login</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link fw-bold" href="{{ route('register') }}">Register</a>
+                                    <a class="nav-link fw-bold text-white" href="{{ route('register') }}">Register</a>
                                 </li>
+                                
                             @endauth
                         </ul>
                     </div>
