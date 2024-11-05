@@ -14,7 +14,7 @@
        <nav>
          <div class="container-fluid">
             <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #99ba99; height:30px">
-                <a class="col-md-4 offset-md-5 fw-bold fst-italic" style="color: #196419; font-size:20px">#RIBAKSUDE</a>
+                <a class="col-md-4 offset-md-1 fw-bold fst-italic" style="color: #196419; font-size:20px">#RIBAKSUDE</a>
             </nav>
             <nav class="navbar navbar-expand-lg navbar-light " style="background-color: #327532; height:50px">
                 <div class="container-fluid">
@@ -24,10 +24,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav ms-auto">
-                            @auth
-                            @if (Auth::check() && isset(Auth::user()->roles[0]) && Auth::user()->roles[0]->name == 'superadmin')
+                        @auth
+                        @if (Auth::check() && isset(Auth::user()->roles[0]) && Auth::user()->roles[0]->name == 'superadmin')
                             <li class="nav-item">
-                                <a class="nav-link fw-bold text-white" href="{{ route('products.index') }}">product</a>
+                            <a class="nav-link fw-bold text-white" href="{{ route('homes.home') }}">home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('product.index') }}">product</a>
                             </li>  
                             <li class="nav-item">
                                 <a class="nav-link fw-bold text-white" href="{{ route('dashboard.products') }}" >Manage Product</a>
@@ -35,27 +38,42 @@
                             <li class="nav-item">
                                 <a class="nav-link fw-bold text-white" href="{{ route('dashboard.users') }}">Manage User</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('player.index') }}">team</a>
+                            </li>  
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('dashboard.players') }}" >Manage Player</a>
+                            </li>
                         @elseif (Auth::check())
                         <li class="nav-item">
-                            <a class="nav-link fw-bold text-white" href="{{ route('products.index') }}">product</a>
-                        </li>  
+                            <a class="nav-link fw-bold text-white" href="{{ route('homes.home') }}">home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('product.index') }}">product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('player.index') }}">team</a>
+                        </li>     
                         @endif
-                        
-    
-                                <li class="nav-item">
-                                    <a class="nav-link fw-bold text-white" href="{{ route('logout') }}">Logout</a>
-                                </li>
-                            @else
                             <li class="nav-item">
-                                <a class="nav-link fw-bold text-white" href="{{ route('products.index') }}">product</a>
+                                <a class="nav-link fw-bold text-white" href="{{ route('logout') }}">Logout</a>
                             </li>
-                                <li class="nav-item">
-                                    <a class="nav-link fw-bold text-white" href="{{ route('login') }}">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link fw-bold text-white" href="{{ route('register') }}">Register</a>
-                                </li>
-                                
+                        @else
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('homes.home') }}">home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('product.index') }}">product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('player.index') }}">team</a>
+                        </li>  
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('login') }}">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('register') }}">Register</a>
+                            </li>    
                             @endauth
                         </ul>
                     </div>

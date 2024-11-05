@@ -19,7 +19,7 @@
                         @endif
 
                         <div class="card bg-white w-100" >
-                            <div class="card-body rounded" alt="100px" style="background-color: rgb(107, 233, 107)">
+                            <div class="card-body rounded" alt="100px" style="background-color: rgb(204, 224, 204)"">
                                 <form action="{{ route('login.authenticate') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">

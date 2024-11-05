@@ -1,14 +1,14 @@
 @extends('layout.master')
-@section('title', 'Product Page')
+@section('title', 'Player Page')
 
 @section('content')
     <div class="mx-lg-5 mt-lg-4 mb-lg-3">
         <div class="rounded pt-3 pb-3" style="background-color: #bbffa1">
-            <h1 class="text-center fw-bold">STORE</h1>
+            <h1 class="text-center fw-bold">Pemain</h1>
             <div class="mt-3 bg-dark mx-auto rounded" style="height: 3px;width: 75px"></div>
             <div class="grid mx-3 mt-4">
                 <div class="row row-gap-4">
-                    @foreach ($products as $item)
+                    @foreach ($players as $item)
                         <div class="col-3">
                             <div class="card bg-white w-100">
                                 <img class="rounded" src="{{ asset($item->image) }}">

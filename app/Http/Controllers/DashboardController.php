@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\ProductExport;
 use App\Exports\ProductExportWithStyle;
+use App\Models\Player;
 use App\Models\Product;
 use App\Models\User;
 
@@ -128,6 +129,122 @@ class DashboardController extends Controller
             unlink($imagePath);
 
         return redirect()->route('dashboard.products')->with('success', 'Product deleted successfully');
+    }
+
+
+    //Players
+    public function players()
+    {
+        $players = Player::all();
+        return view('dashboard.players.index', compact('players'));
+    }
+
+    // add product
+    public function addPlayer()
+    {
+        return view('dashboard.players.add');
+    }
+
+    // store product
+    public function storePlayer(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'nama' => 'required|string',
+            'berat' => 'required|integer',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+            'kondisi' => 'required|in:Bekas,Baru',
+            'deskripsi' => 'required|string|max:2000',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard.players.add')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $file = $request->file('image');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move('storage/players', $fileName);
+
+        Player::create([
+            'user_id' => Auth::user()->id,
+            'image' => '/storage/players/' . $fileName,
+            'name' => $request->nama,
+            'weight' => $request->berat,
+            'price' => $request->harga,
+            'condition' => $request->kondisi,
+            'stock' => $request->stok,
+            'description' => $request->deskripsi,
+        ]);
+
+        return redirect()->route('dashboard.players')->with('success', 'Player added successfully');
+    }
+
+    // edit product
+    public function editPlayer($id)
+    {
+        $product = Player::find($id);
+        return view('dashboard.player.edit', compact('player'));
+    }
+
+    // update product
+    public function updatePlayer(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'nama' => 'required|string',
+            'berat' => 'required|integer',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+            'kondisi' => 'required|in:Bekas,Baru',
+            'deskripsi' => 'required|string|max:2000',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard.players.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $player = Player::find($id);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move('storage/players', $fileName);
+
+            $imagePath = public_path($player->image);
+            if (file_exists($imagePath))
+                unlink($imagePath);
+
+            $player->image = '/storage/players/' . $fileName;
+        }
+
+        $player->name = $request->nama;
+        $player->price = $request->harga;
+        $player->weight = $request->berat;
+        $player->condition = $request->kondisi;
+        $player->stock = $request->stok;
+        $player->description = $request->deskripsi;
+        $player->save();
+
+        return redirect()->route('dashboard.players')->with('success', 'Player updated successfully');
+    }
+
+    // delete product
+    public function deletePlayer($id)
+    {
+        $player = Player::find($id);
+        $player->delete();
+
+        // delete image
+        $imagePath = public_path($player->image);
+        if (file_exists($imagePath))
+            unlink($imagePath);
+
+        return redirect()->route('dashboard.players')->with('success', 'Player deleted successfully');
     }
 
     // Users

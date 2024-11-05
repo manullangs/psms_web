@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
@@ -12,9 +13,11 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', [HomeController::class, 'home'])->name('homes.home');
 
 // Products
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::post('/products', [ProductController::class, 'index'])->name('products.index');
-
+Route::get('/products', [ProductController::class, 'index'])->name('product.index');
+Route::post('/products', [ProductController::class, 'index'])->name('product.index');
+// Players
+Route::get('/players', [PlayerController::class, 'index'])->name('player.index');
+Route::post('/players', [PlayerController::class, 'index'])->name('player.index');
 
 
 //Auth
@@ -31,9 +34,8 @@ Route::get('/dashboard', [DashboardController::class, 'profile'])->name('profile
 
 // Dashboard
 Route::prefix('dashboard')->middleware('authentication')->group(function () {
-
     // Products
-Route::prefix('products')->middleware('role:superadmin|user')->group(function () {
+    Route::prefix('products')->middleware('role:superadmin|user')->group(function () {
         Route::get('/', [DashboardController::class, 'products'])->name('dashboard.products');
         Route::get('/add', [DashboardController::class, 'addProduct'])->name('dashboard.products.add');
         Route::post('/store', [DashboardController::class, 'storeProduct'])->name('dashboard.products.store');
@@ -41,8 +43,17 @@ Route::prefix('products')->middleware('role:superadmin|user')->group(function ()
         Route::put('/update/{id}', [DashboardController::class, 'updateProduct'])->name('dashboard.products.update');
         Route::post('/delete/{id}', [DashboardController::class, 'deleteProduct'])->name('dashboard.products.delete');
         Route::get('/export', [DashboardController::class, 'exportProduct'])->name('dashboard.products.export');
-});
-
+    });
+    //Players
+    Route::prefix('players')->middleware('role:superadmin|user')->group(function () {
+        Route::get('/', [DashboardController::class, 'players'])->name('dashboard.players');
+        Route::get('/add', [DashboardController::class, 'addPlayer'])->name('dashboard.players.add');
+        Route::post('/store', [DashboardController::class, 'storePlayer'])->name('dashboard.players.store');
+        Route::get('/edit/{id}', [DashboardController::class, 'editPlayer'])->name('dashboard.players.edit');
+        Route::put('/update/{id}', [DashboardController::class, 'updatePlayer'])->name('dashboard.players.update');
+        Route::post('/delete/{id}', [DashboardController::class, 'deletePlayer'])->name('dashboard.players.delete');
+        Route::get('/export', [DashboardController::class, 'exportPlayer'])->name('dashboard.players.export');
+    });
     // Users
     Route::prefix('users')->middleware('role:superadmin')->group(function () {
         Route::get('/', [DashboardController::class, 'users'])->name('dashboard.users');
@@ -52,5 +63,4 @@ Route::prefix('products')->middleware('role:superadmin|user')->group(function ()
         Route::put('/update/{id}', [DashboardController::class, 'updateUser'])->name('dashboard.users.update');
         Route::post('/delete/{id}', [DashboardController::class, 'deleteUser'])->name('dashboard.users.delete');
     });
-
 });
