@@ -7,6 +7,7 @@ use App\Exports\ProductExportWithStyle;
 use App\Models\Player;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Event;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -246,6 +247,123 @@ class DashboardController extends Controller
 
         return redirect()->route('dashboard.players')->with('success', 'Player deleted successfully');
     }
+    // add event
+    public function addEvent()
+    {
+        return view('dashboard.events.add');
+    }
+
+    // store event
+    public function storeEvent(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'nama' => 'required|string',
+            'berat' => 'required|integer',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+            'kondisi' => 'required|in:Bekas,Baru',
+            'deskripsi' => 'required|string|max:2000',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard.events.add')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $file = $request->file('image');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->move('storage/events', $fileName);
+
+        Event::create([
+            'user_id' => Auth::user()->id,
+            'image' => '/storage/events/' . $fileName,
+            'name' => $request->nama,
+            'weight' => $request->berat,
+            'price' => $request->harga,
+            'condition' => $request->kondisi,
+            'stock' => $request->stok,
+            'description' => $request->deskripsi,
+        ]);
+
+        return redirect()->route('dashboard.events')->with('success', 'Event added successfully');
+    }
+
+    // edit product
+    public function editEvent($id)
+    {
+        $event = Event::find($id);
+        return view('dashboard.event.edit', compact('event'));
+    }
+
+    // update product
+    public function updateEvent(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+            'nama' => 'required|string',
+            'berat' => 'required|integer',
+            'harga' => 'required|integer',
+            'stok' => 'required|integer',
+            'kondisi' => 'required|in:Bekas,Baru',
+            'deskripsi' => 'required|string|max:2000',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->route('dashboard.events.edit', $id)
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $event = Event::find($id);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move('storage/players', $fileName);
+
+            $imagePath = public_path($event->image);
+            if (file_exists($imagePath))
+                unlink($imagePath);
+
+            $event->image = '/storage/events/' . $fileName;
+        }
+
+        $event->name = $request->nama;
+        $event->price = $request->harga;
+        $event->weight = $request->berat;
+        $event->condition = $request->kondisi;
+        $event->stock = $request->stok;
+        $event->description = $request->deskripsi;
+        $event->save();
+
+        return redirect()->route('dashboard.events')->with('success', 'Event updated successfully');
+    }
+
+    // delete product
+    public function deleteEvent($id)
+    {
+        $event = Event::find($id);
+        $event->delete();
+
+        // delete image
+        $imagePath = public_path($event->image);
+        if (file_exists($imagePath))
+            unlink($imagePath);
+
+        return redirect()->route('dashboard.events')->with('success', 'Event deleted successfully');
+    }
+    //Event
+
+
+
+
+
+
+
+
+
 
     // Users
     public function users()

@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\EventController;
 
 
 // Home
@@ -18,6 +19,9 @@ Route::post('/products', [ProductController::class, 'index'])->name('product.ind
 // Players
 Route::get('/players', [PlayerController::class, 'index'])->name('player.index');
 Route::post('/players', [PlayerController::class, 'index'])->name('player.index');
+// Events
+Route::get('/events', [EventController::class, 'index'])->name('event.index');
+Route::post('/events', [EventController::class, 'index'])->name('event.index');
 
 
 //Auth
@@ -45,6 +49,16 @@ Route::prefix('dashboard')->middleware('authentication')->group(function () {
         Route::get('/export', [DashboardController::class, 'exportProduct'])->name('dashboard.products.export');
     });
     //Players
+    Route::prefix('players')->middleware('role:superadmin|user')->group(function () {
+        Route::get('/', [DashboardController::class, 'players'])->name('dashboard.players');
+        Route::get('/add', [DashboardController::class, 'addPlayer'])->name('dashboard.players.add');
+        Route::post('/store', [DashboardController::class, 'storePlayer'])->name('dashboard.players.store');
+        Route::get('/edit/{id}', [DashboardController::class, 'editPlayer'])->name('dashboard.players.edit');
+        Route::put('/update/{id}', [DashboardController::class, 'updatePlayer'])->name('dashboard.players.update');
+        Route::post('/delete/{id}', [DashboardController::class, 'deletePlayer'])->name('dashboard.players.delete');
+        Route::get('/export', [DashboardController::class, 'exportPlayer'])->name('dashboard.players.export');
+    });
+    // Event
     Route::prefix('players')->middleware('role:superadmin|user')->group(function () {
         Route::get('/', [DashboardController::class, 'players'])->name('dashboard.players');
         Route::get('/add', [DashboardController::class, 'addPlayer'])->name('dashboard.players.add');

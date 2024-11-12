@@ -39,6 +39,12 @@
                                 <a class="nav-link fw-bold text-white" href="{{ route('dashboard.users') }}">Manage User</a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('dashboard.events') }}">Manage Event</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold text-white" href="{{ route('event.index') }}">Event</a>
+                            </li> 
+                            <li class="nav-item">
                                 <a class="nav-link fw-bold text-white" href="{{ route('player.index') }}">team</a>
                             </li>  
                             <li class="nav-item">
@@ -51,6 +57,9 @@
                         <li class="nav-item">
                             <a class="nav-link fw-bold text-white" href="{{ route('product.index') }}">product</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('event.index') }}">Event</a>
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link fw-bold text-white" href="{{ route('player.index') }}">team</a>
                         </li>     
@@ -65,6 +74,9 @@
                         <li class="nav-item">
                             <a class="nav-link fw-bold text-white" href="{{ route('product.index') }}">product</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-white" href="{{ route('event.index') }}">Event</a>
+                        </li>  
                         <li class="nav-item">
                             <a class="nav-link fw-bold text-white" href="{{ route('player.index') }}">team</a>
                         </li>  
