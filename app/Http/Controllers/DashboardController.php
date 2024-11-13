@@ -247,6 +247,13 @@ class DashboardController extends Controller
 
         return redirect()->route('dashboard.players')->with('success', 'Player deleted successfully');
     }
+
+    //Events
+    public function events()
+    {
+        $events = Event::all();
+        return view('dashboard.events.index', compact('events'));
+    }
     // add event
     public function addEvent()
     {

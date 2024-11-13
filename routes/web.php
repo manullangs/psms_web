@@ -23,7 +23,6 @@ Route::post('/players', [PlayerController::class, 'index'])->name('player.index'
 Route::get('/events', [EventController::class, 'index'])->name('event.index');
 Route::post('/events', [EventController::class, 'index'])->name('event.index');
 
-
 //Auth
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
@@ -59,14 +58,14 @@ Route::prefix('dashboard')->middleware('authentication')->group(function () {
         Route::get('/export', [DashboardController::class, 'exportPlayer'])->name('dashboard.players.export');
     });
     // Event
-    Route::prefix('players')->middleware('role:superadmin|user')->group(function () {
-        Route::get('/', [DashboardController::class, 'players'])->name('dashboard.players');
-        Route::get('/add', [DashboardController::class, 'addPlayer'])->name('dashboard.players.add');
-        Route::post('/store', [DashboardController::class, 'storePlayer'])->name('dashboard.players.store');
-        Route::get('/edit/{id}', [DashboardController::class, 'editPlayer'])->name('dashboard.players.edit');
-        Route::put('/update/{id}', [DashboardController::class, 'updatePlayer'])->name('dashboard.players.update');
-        Route::post('/delete/{id}', [DashboardController::class, 'deletePlayer'])->name('dashboard.players.delete');
-        Route::get('/export', [DashboardController::class, 'exportPlayer'])->name('dashboard.players.export');
+    Route::prefix('events')->middleware('role:superadmin|user')->group(function () {
+        Route::get('/', [DashboardController::class, 'events'])->name('dashboard.events');
+        Route::get('/add', [DashboardController::class, 'addEvent'])->name('dashboard.events.add');
+        Route::post('/store', [DashboardController::class, 'storeEvent'])->name('dashboard.events.store');
+        Route::get('/edit/{id}', [DashboardController::class, 'editEvent'])->name('dashboard.events.edit');
+        Route::put('/update/{id}', [DashboardController::class, 'updateEvent'])->name('dashboard.events.update');
+        Route::post('/delete/{id}', [DashboardController::class, 'deleteEvent'])->name('dashboard.events.delete');
+        Route::get('/export', [DashboardController::class, 'exportEvent'])->name('dashboard.events.export');
     });
     // Users
     Route::prefix('users')->middleware('role:superadmin')->group(function () {
