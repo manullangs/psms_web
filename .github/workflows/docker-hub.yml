@@ -8,7 +8,7 @@ env:
   # Use docker.io for Docker Hub if empty 
   REGISTRY: docker.io 
   # dockerhub.repository as <account>/<repo> 
-  IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/node-client_app 
+  IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/php-app 
 jobs: 
   build: 
     runs-on: ubuntu-latest 
