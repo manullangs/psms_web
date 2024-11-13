@@ -2,10 +2,12 @@ version: '3.8'
 
 services:
   app:
-    image: dockerpsms/node-client_app:main
-    container_name: node_client_app
+    image: dockerpsms/php-app:main # Ganti dengan image PHP Anda
+    container_name: php_app
     ports:
-      - "8080:8080"
+      - "8080:80" # Meneruskan port 80 dari container ke port 8080 di host
+    volumes:
+      - ./src:/var/www/html # Ganti dengan path ke folder aplikasi PHP Anda
 
   watchtower:
     image: containrrr/watchtower
