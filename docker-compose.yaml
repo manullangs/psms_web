@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  app:
+    image: php:8.0-apache
+    container_name: php_app
+    working_dir: /var/www/html
+    volumes:
+      - ./your-php-app/:/var/www/html # Ganti dengan path ke aplikasi Anda
+    ports:
+      - "8080:80" # Ganti dengan port yang Anda inginkan
+
+  db:
+    image: mysql:5.7 # Sesuaikan versi MySQL jika perlu
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword # Ubah password sesuai kebutuhan
+      MYSQL_DATABASE: your_database # Ganti dengan nama database yang Anda inginkan
+      MYSQL_USER: user # Ganti dengan nama user
+      MYSQL_PASSWORD: userpassword # Ubah password sesuai kebutuhan
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  db_data:
