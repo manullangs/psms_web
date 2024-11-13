@@ -2,25 +2,16 @@ version: '3.8'
 
 services:
   app:
-    image: php:8.0-apache
-    container_name: php_app
-    volumes:
-      - ./src:/var/www/html
+    image: dockerpsms/node-client_app:main
+    container_name: node_client_app
     ports:
-      - "8080:80"
+      - "8080:8080"
 
-  db:
-    image: mysql:5.7
-    container_name: mysql_db
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: my_database
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-    volumes:
-      - db_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-
-volumes:
-  db_data:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_POLL_INTERVAL=1
