@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: dockerpsms/php-app
+    image: dockerpsms/php-app:main
     container_name: php_app
     volumes:
       - ./src:/var/www/html
