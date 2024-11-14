@@ -2,44 +2,20 @@ version: '3.8'
 
 services:
   app:
-    image: dockerpsms/php-app:main
-    container_name: php_app
-    volumes:
-      - ./src:/var/www/html
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${REGISTRY}/${IMAGE_NAME}:latest
+    container_name: php-app
     ports:
-      - "8080:80"
-    networks:
-      - app-network
-
-  db:
-    image: mysql:5.7
-    container_name: mysql_db
+      - "80:80"  # atau port lain yang digunakan aplikasi PHP kamu
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: my_database
-      MYSQL_USER: user
-      MYSQL_PASSWORD: user_password
+      - PHP_ENV=production  # bisa sesuaikan dengan variabel env yang dibutuhkan
     volumes:
-      - db_data:/var/lib/mysql
+      - .:/var/www/html
     networks:
-      - app-network
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_USER: user
-      PMA_PASSWORD: user_password
-    ports:
-      - "8081:80"
-    networks:
-      - app-network
-
-volumes:
-  db_data:
+      - app_network
 
 networks:
-  app-network:
+  app_network:
     driver: bridge
