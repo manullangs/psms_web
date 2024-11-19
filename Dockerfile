@@ -14,4 +14,4 @@ RUN apt-get update && apt-get install -y \
 COPY . /client
 
 # Menjalankan server PHP built-in
-CMD ["php", "-S", "0.0.0.0:8000"]
+CMD ["php", "-S", "127.0.0.1:8080"]
