@@ -8,10 +8,13 @@ WORKDIR /client
 COPY composer.json /client
 RUN apt-get update && apt-get install -y \
     libzip-dev \
-    && docker-php-ext-install zip
+    unzip \
+    && docker-php-ext-install zip \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer install
 
 # Menyalin semua file ke dalam direktori kerja
 COPY . /client
 
 # Menjalankan server PHP built-in
-CMD ["php", "-S", "127.0.0.1:8080"]
+CMD ["php", "-S", "0.0.0.0:8080"]
