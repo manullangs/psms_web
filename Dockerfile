@@ -1,20 +1,25 @@
 # Menggunakan gambar resmi PHP
-FROM php:8.1-cli
+FROM php:8.1.0-apache
 
 # Menetapkan direktori kerja
-WORKDIR /client
+WORKDIR /var/www/html
 
-# Menyalin file composer.json dan menginstal dependensi
-COPY composer.json /client
+RUN a2enmod rewrite
+
 RUN apt-get update && apt-get install -y \
-    libzip-dev \
-    unzip \
-    && docker-php-ext-install zip \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer install
+    libicu-dev \
+    libmaradb-dev \
+    unzip zip \
+    zliblg-dev \
+    libpng-dev \
+    libjepg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev
+    
+COPY --from=composer:latest usr/bin/composer usr/bin/composer 
 
-# Menyalin semua file ke dalam direktori kerja
-COPY . /client
+RUN docker-php-ext-install gettext intl pdo_mysql gd
 
-# Menjalankan server PHP built-in
-CMD ["php", "-S", "0.0.0.0:8080"]
+RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
