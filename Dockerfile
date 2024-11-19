@@ -1,6 +1,17 @@
-FROM node
+# Menggunakan gambar resmi PHP
+FROM php:8.1-cli
+
+# Menetapkan direktori kerja
 WORKDIR /client
-COPY package.json /client
-RUN npm install -g http-server
+
+# Menyalin file composer.json dan menginstal dependensi
+COPY composer.json /client
+RUN apt-get update && apt-get install -y \
+    libzip-dev \
+    && docker-php-ext-install zip
+
+# Menyalin semua file ke dalam direktori kerja
 COPY . /client
-CMD ["http-server","-c", "-1"]
+
+# Menjalankan server PHP built-in
+CMD ["php", "-S", "0.0.0.0:8000"]
